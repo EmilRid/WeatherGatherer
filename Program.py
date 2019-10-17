@@ -21,4 +21,11 @@ def getWeatherType(): #returns Ex. Cloudy, mostly cloudy
 
 def getTable(): #return values with american units coresponding with the RIGHT NOW table on the website
     for obj in weatherSoup.find_all(class_="today_nowcard-sidecar component panel"):
-        return re.sub("\D", " ", str(obj.get_text()))
+        return str(obj.get_text())
+
+def getWind(unit):#mph or kmh
+    print(getTable())
+    if unit == "mph":
+        return str(getTable()[13:getTable().index("Hum")])
+    elif unit == "kmh":
+        return getTable()[13:16] + str(round(int(re.sub("\D", "", str(getTable()[13:getTable().index("mph")])))*1.609)) + " km/h" #gets wind speed in kmh
