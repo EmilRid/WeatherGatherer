@@ -28,5 +28,3 @@ def getWind(unit):#mph or kmh
         return str(getTable()[13:getTable().index("Hum")])
     elif unit == "kmh":
         return getTable()[13:16] + str(round(int(re.sub("\D", "", str(getTable()[13:getTable().index("mph")])))*1.609)) + " km/h" #gets wind speed in kmh
-
-print(getWind("kmh"))
