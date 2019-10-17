@@ -1,12 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
-unit = "celsius" #unit of measurement 
-weatherURL = "https://weather.com/weather/today/l/8b2acedf23be2811693b172400157817be1e2c7b9962e5db45ee1a5f94a59a9c" #weather.com search result 
+weatherURL = "" #weather.com search result 
 weatherPage = requests.get(weatherURL) 
 weatherSoup = BeautifulSoup(weatherPage.text, "html.parser")
 
-def getTemp(): #returns temperature value
+def getTemp(unit): #returns temperature value, unit: celsius or fahrenheit
     farhenheit = int(weatherSoup.find(class_="today_nowcard-temp").get_text()[0:-1])
     if unit == "celsius":
         celsius = round((farhenheit-32)*5/9)
@@ -17,5 +17,8 @@ def getTemp(): #returns temperature value
         print("Check unit for accurate spelling")
 
 def getWeatherType(): #returns Ex. Cloudy, mostly cloudy
-    return weatherSoup.find(class_="today_nowcard-phrase").get_text() 
+    return weatherSoup.find(class_="today_nowcard-phrase").get_text()
 
+def getTable(): #return values with american units coresponding with the RIGHT NOW table on the website
+    for obj in weatherSoup.find_all(class_="today_nowcard-sidecar component panel"):
+        return re.sub("\D", " ", str(obj.get_text()))
