@@ -24,8 +24,9 @@ def getTable(): #return values with american units coresponding with the RIGHT N
         return str(obj.get_text())
 
 def getWind(unit):#mph or kmh
-    print(getTable())
     if unit == "mph":
         return str(getTable()[13:getTable().index("Hum")])
     elif unit == "kmh":
         return getTable()[13:16] + str(round(int(re.sub("\D", "", str(getTable()[13:getTable().index("mph")])))*1.609)) + " km/h" #gets wind speed in kmh
+
+print(getWind("kmh"))
