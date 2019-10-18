@@ -9,8 +9,7 @@ weatherSoup = BeautifulSoup(weatherPage.text, "html.parser")
 def getTemp(unit): #returns temperature value, unit: celsius or fahrenheit
     farhenheit = int(weatherSoup.find(class_="today_nowcard-temp").get_text()[0:-1])
     if unit == "celsius":
-        celsius = round((farhenheit-32)*5/9)
-        return celsius
+        return round((farhenheit-32)*5/9)
     elif unit == "fahrenheit":
         return farhenheit
     else: 
