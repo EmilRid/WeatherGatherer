@@ -23,11 +23,19 @@ def getTable(): #return values with american units coresponding with the RIGHT N
     for obj in weatherSoup.find_all(class_="today_nowcard-sidecar component panel"):
         return str(obj.get_text())
 
-def getWind(unit):#mph or kmh
+def getWind(unit): #returns wind direction and wind speed, unit: mph or kmh
     if unit == "mph":
         return str(getTable()[13:getTable().index("Hum")])
     elif unit == "kmh":
         return getTable()[13:16] + str(round(int(re.sub("\D", "", str(getTable()[13:getTable().index("mph")])))*1.609)) + " km/h" #gets wind speed in kmh
 
-def getHum():
+def getHum(): #returns humidity value
     return getTable()[getTable().index("Humidity")+8:getTable().index("Dew")]
+
+def getDewPoint(unit): #returns dew point value, unit: celsius or fahrenheit
+    if unit == "celsius":
+        return round((int(getTable()[getTable().index("Point")+5:getTable().index("Pressure")-1])-32)*5/9)
+    elif unit == "fahrenheit":
+        return getTable()[getTable().index("Point")+5:getTable().index("Pressure")-1]
+    else:
+        print("Check unit for accurate spelling")
