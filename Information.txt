@@ -1,0 +1,6 @@
+Temperature:
+WeatherType:
+Table:
+Wind:
+Humidity:
+DewPoint:
